@@ -3,22 +3,26 @@ const mongoose = require("mongoose");
 const path = require("path");
 const bcrypt = require("bcrypt");
 const app = express();
-const jwt = require("jsonwebtoken"); // Added JWT for session handling
+const jwt = require("jsonwebtoken");
+require('dotenv').config(); // Added JWT for session handling
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 app.use(express.static(path.join(__dirname, "public")));
 
-const SECRET_KEY = "mHn3Q8zYtnv5Gv4jR1XJp2zS6oWxF97b";
+
 // MongoDB Connection
 const username = "Sarthak";
 const password = encodeURIComponent("Sarthak05"); // URL-encode if needed
 const dbName = "Users";
 
-const atlasUri = `mongodb+srv://${username}:${password}@cluster0.puavtl6.mongodb.net/${dbName}?retryWrites=true&w=majority`;
+const atlasUri = process.env.MONGODB_URI || `mongodb+srv://${username}:${password}@cluster0.puavtl6.mongodb.net/${dbName}?retryWrites=true&w=majority`;
+const SECRET_KEY = process.env.SECRET_KEY || "mHn3Q8zYtnv5Gv4jR1XJp2zS6oWxF97b";
 
 mongoose.connect(atlasUri, {
   useNewUrlParser: true,
-  useUnifiedTopology: true
+  useUnifiedTopology: true,
+  serverSelectionTimeoutMS: 5000, // Timeout after 5s
+  socketTimeoutMS: 45000 // Close sockets after 45s inactivity
 })
 .then(() => console.log("✅ Connected to MongoDB Atlas"))
 .catch(err => console.error("❌ Connection error:", err));
@@ -703,6 +707,7 @@ app.post("/api/auth/logout", (req, res) => {
 
 
 // Start the server
-app.listen(3000, () => {
-  console.log("Server is running on port http://localhost:3000");
+const PORT = process.env.PORT || 3000;
+app.listen(PORT, () => {
+  console.log(`Server is running on port http://localhost:${PORT}`);
 });
