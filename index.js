@@ -148,6 +148,7 @@ app.post("/post", async (req, res) => {
 
 app.post("/logon", async (req, res) => {
   try {
+    await connectToDatabase();
     const { role, username, password } = req.body;
     let user;
 
@@ -516,6 +517,7 @@ app.post("/api/user/updateBookStatus", async (req, res) => {
 });
 app.get("/api/stats", async (req, res) => {
   try {
+    await connectToDatabase();
     const totalBooks = await Book.countDocuments();
     const totalStudents = await User.countDocuments();
     
@@ -685,6 +687,7 @@ app.post("/api/books/renew", async (req, res) => {
 
 app.get("/api/books/stats", async (req, res) => {
   try {
+    await connectToDatabase();
     const books = await Book.find().select('title copies availableCopies renewals category'); // Add category
     const bookStats = books.map(book => ({
       title: book.title,
