@@ -124,6 +124,7 @@ app.get("/admin", (req, res) => {
 // Authentication Routes
 app.post("/post", async (req, res) => {
   try {
+    await connectToDatabase();
     const { username, email, password } = req.body;
     const existingUser = await User.findOne({
       $or: [{ username }, { email }],
@@ -207,6 +208,7 @@ app.get("/api/user/profile", (req, res) => {
   if (!token) return res.status(401).json({ error: "Unauthorized" });
 
   try {
+    
     const decoded = jwt.verify(token, SECRET_KEY);
     res.json({ username: decoded.username, role: decoded.role });
   } catch (error) {
@@ -216,6 +218,7 @@ app.get("/api/user/profile", (req, res) => {
 
 app.post("/admin/addBook", async (req, res) => {
   try {
+    await connectToDatabase();
     const { title, author, copies, isbn, link, category, imageCoverLink } = req.body;
 
     // Validate input
@@ -250,6 +253,7 @@ app.post("/admin/addBook", async (req, res) => {
 });
 app.post("/api/requests", async (req, res) => {
   try {
+    await connectToDatabase();
     const { studentId, bookId, days } = req.body;
 
     const book = await Book.findById(bookId);
@@ -276,6 +280,7 @@ app.post("/api/requests", async (req, res) => {
 
 app.get("/api/requests", async (req, res) => {
   try {
+    await connectToDatabase();
     const requests = await Request.find()
       .populate("student", "username")
       .populate("book", "title");
@@ -288,6 +293,7 @@ app.get("/api/requests", async (req, res) => {
 
 app.put("/api/requests/:id", async (req, res) => {
   try {
+    await connectToDatabase();
     const { status } = req.body;
     if (!["Approved", "Rejected"].includes(status)) {
       return res.status(400).json({ error: "Invalid status" });
@@ -540,6 +546,7 @@ app.get("/api/stats", async (req, res) => {
 });
 app.get("/stats/borrowing-trend", async (req, res) => {
   try {
+    await connectToDatabase();
     const trendData = await Borrowing.aggregate([
       {
         $group: {
@@ -574,6 +581,7 @@ app.get("/stats/borrowing-trend", async (req, res) => {
 
 app.get("/api/students/:id", async (req, res) => {
   try {
+    await connectToDatabase();
     const studentId = req.params.id;
     const student = await User.findById(studentId);
 
@@ -596,6 +604,7 @@ app.get("/api/students/:id", async (req, res) => {
 // Update the /api/student/stats endpoint in index.js
 app.get("/api/student/stats", async (req, res) => {
   try {
+    await connectToDatabase();
     const token = req.headers.authorization?.split(" ")[1];
     if (!token) return res.status(401).json({ error: "Unauthorized" });
 
@@ -639,6 +648,7 @@ app.get("/api/student/stats", async (req, res) => {
 // Add this new endpoint for renewal requests
 app.post("/api/books/renew", async (req, res) => {
   try {
+    await connectToDatabase();
     const { studentId, bookId, days } = req.body;
 
     // Find the student and the book
