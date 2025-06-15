@@ -1,7 +1,7 @@
 const express = require("express");
 const mongoose = require("mongoose");
 const path = require("path");
-const bcrypt = require("bcrypt");
+const bcrypt = require("bcryptjs");
 const app = express();
 const jwt = require("jsonwebtoken");
 require('dotenv').config(); // Added JWT for session handling
