@@ -84,21 +84,23 @@ const Request = mongoose.model("Request", requestSchema);
 
 // Routes
 app.get("/", (req, res) => {
-  res.sendFile(path.join(__dirname, "home.html"));
+  res.sendFile(path.join(__dirname, "views", "home.html"));
 });
+
 app.get("/login", (req, res) => {
-  res.sendFile(path.join(__dirname, "login.html"));
+  res.sendFile(path.join(__dirname, "views", "login.html"));
 });
+
 app.get("/register", (req, res) => {
-  res.sendFile(path.join(__dirname, "register.html"));
+  res.sendFile(path.join(__dirname, "views", "register.html"));
 });
 
 app.get("/student", (req, res) => {
-  res.sendFile(path.join(__dirname, "student.html"));
+  res.sendFile(path.join(__dirname, "views", "student.html"));
 });
 
 app.get("/admin", (req, res) => {
-  res.sendFile(path.join(__dirname, "admin.html"));
+  res.sendFile(path.join(__dirname, "views", "admin.html"));
 });
 
 // Authentication Routes
