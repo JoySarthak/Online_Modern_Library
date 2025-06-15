@@ -10,14 +10,19 @@ app.use(express.static(path.join(__dirname, "public")));
 
 const SECRET_KEY = "mHn3Q8zYtnv5Gv4jR1XJp2zS6oWxF97b";
 // MongoDB Connection
-mongoose
-  .connect("mongodb://localhost:27017/Users")
-  .then(() => {
-    console.log("✅ Database Connected Successfully");
-  })
-  .catch((error) => {
-    console.error("❌ Connection error:", error);
-  });
+const username = "Sarthak";
+const password = encodeURIComponent("Sarthak05"); // URL-encode if needed
+const dbName = "Users";
+
+const atlasUri = `mongodb+srv://${username}:${password}@cluster0.puavtl6.mongodb.net/${dbName}?retryWrites=true&w=majority`;
+
+mongoose.connect(atlasUri, {
+  useNewUrlParser: true,
+  useUnifiedTopology: true
+})
+.then(() => console.log("✅ Connected to MongoDB Atlas"))
+.catch(err => console.error("❌ Connection error:", err));
+
 
 // Schemas
 const userSchema = new mongoose.Schema({
