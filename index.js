@@ -11,12 +11,8 @@ app.use(express.static(path.join(__dirname, "public")));
 
 
 // MongoDB Connection
-const username = "Sarthak";
-const password = encodeURIComponent("Sarthak05"); // URL-encode if needed
-const dbName = "Users";
-
-const atlasUri = process.env.MONGODB_URI || `mongodb+srv://${username}:${password}@cluster0.puavtl6.mongodb.net/${dbName}?retryWrites=true&w=majority`;
-const SECRET_KEY = process.env.SECRET_KEY || "mHn3Q8zYtnv5Gv4jR1XJp2zS6oWxF97b";
+const atlasUri = process.env.MONGODB_URI; // No fallback!
+const SECRET_KEY = process.env.SECRET_KEY;
 
 mongoose.connect(atlasUri, {
   useNewUrlParser: true,
@@ -707,7 +703,7 @@ app.post("/api/auth/logout", (req, res) => {
 
 
 // Start the server
-const PORT = process.env.PORT || 3000;
+const PORT = process.env.PORT;
 app.listen(PORT, () => {
   console.log(`Server is running on port http://localhost:${PORT}`);
 });
