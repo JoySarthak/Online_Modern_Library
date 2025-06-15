@@ -14,16 +14,34 @@ app.use(express.static(path.join(__dirname, "public")));
 const atlasUri = process.env.MONGODB_URI; // No fallback!
 const SECRET_KEY = process.env.SECRET_KEY;
 
-mongoose.connect(atlasUri, {
-  useNewUrlParser: true,
-  useUnifiedTopology: true,
-  serverSelectionTimeoutMS: 5000, // Timeout after 5s
-  socketTimeoutMS: 45000 // Close sockets after 45s inactivity
-})
-.then(() => console.log("✅ Connected to MongoDB Atlas"))
-.catch(err => console.error("❌ Connection error:", err));
+let cachedDb = null;
 
+async function connectToDatabase() {
+  if (cachedDb && cachedDb.readyState === 1) {
+    console.log('✅ Using cached database connection');
+    return cachedDb;
+  }
 
+  try {
+    const db = await mongoose.connect(process.env.MONGODB_URI, {
+      useNewUrlParser: true,
+      useUnifiedTopology: true,
+      serverSelectionTimeoutMS: 5000,
+      socketTimeoutMS: 30000,
+      maxPoolSize: 5 // Smaller pool for serverless
+    });
+    cachedDb = db;
+    console.log('✅ New database connection');
+    return db;
+  } catch (err) {
+    console.error('❌ Connection error:', err);
+    throw err;
+  }
+}
+mongoose.connection.on('connected', () => {
+  mongoose.connection.client.s.options.socketTimeoutMS = 30000;
+  mongoose.connection.client.s.options.connectTimeoutMS = 30000;
+});
 // Schemas
 const userSchema = new mongoose.Schema({
   username: String,
@@ -344,6 +362,7 @@ app.put("/api/requests/:id", async (req, res) => {
 // Book Routes
 app.get("/api/books", async (req, res) => {
   try {
+    await connectToDatabase();
     const page = parseInt(req.query.page) || 1;
     const limit = 10;
     const skip = (page - 1) * limit;
