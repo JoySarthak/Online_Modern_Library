@@ -1,0 +1,295 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Register Page</title>
+  <style>
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+      font-family: "Segoe UI", Tahoma, Geneva, Verdana, sans-serif;
+    }
+
+    body {
+      display: flex;
+      min-height: 100vh;
+      padding: 20px;
+      background-color: #f8f9fa;
+    }
+
+    .container {
+      display: flex;
+      width: 100%;
+      max-width: 1200px;
+      margin: auto;
+      border-radius: 20px;
+      overflow: hidden;
+      box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
+    }
+
+    .left-section {
+      flex: 1;
+      background: linear-gradient(135deg, #1e88e5, #0d47a1);
+      color: white;
+      padding: 4rem;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      text-align: center;
+    }
+
+    .right-section {
+      flex: 1;
+      padding: 4rem;
+      background-color: white;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+    }
+
+    .register-header {
+      margin-bottom: 2.5rem;
+    }
+
+    .register-header h1 {
+      font-size: 2rem;
+      font-weight: 700;
+      color: white;
+      margin-bottom: 0.5rem;
+    }
+
+    .register-header p {
+      color: rgba(255, 255, 255, 0.8);
+      font-size: 0.9rem;
+    }
+
+    .register-header p a {
+      color: white;
+      text-decoration: none;
+      font-weight: 500;
+    }
+
+    .input-group {
+      margin-bottom: 1.5rem;
+    }
+
+    .input-group label {
+      display: block;
+      margin-bottom: 8px;
+      color: #424242;
+      font-size: 0.9rem;
+      font-weight: 500;
+    }
+
+    .input-group input {
+      width: 100%;
+      padding: 14px 16px;
+      background: #f5f5f5;
+      border: none;
+      border-radius: 8px;
+      font-size: 1rem;
+      color: #212121;
+      transition: all 0.3s ease;
+    }
+
+    .input-group input:focus {
+      outline: none;
+      background: #e3f2fd;
+      box-shadow: 0 0 0 2px rgba(30, 136, 229, 0.3);
+    }
+
+    .register-btn {
+      width: 100%;
+      padding: 14px;
+      background: #1e88e5;
+      color: white;
+      border: none;
+      border-radius: 8px;
+      font-size: 1rem;
+      font-weight: 600;
+      cursor: pointer;
+      transition: all 0.3s ease;
+      margin-top: 1rem;
+    }
+
+    .register-btn:hover {
+      background: #1565c0;
+      transform: translateY(-2px);
+      box-shadow: 0 5px 15px rgba(30, 136, 229, 0.4);
+    }
+
+    .social-login {
+      margin-top: 2rem;
+      text-align: center;
+    }
+
+    .social-login p {
+      color: #757575;
+      font-size: 0.9rem;
+      margin-bottom: 1rem;
+      position: relative;
+    }
+
+    .social-login p::before,
+    .social-login p::after {
+      content: "";
+      position: absolute;
+      top: 50%;
+      width: 30%;
+      height: 1px;
+      background: #e0e0e0;
+    }
+
+    .social-login p::before {
+      left: 0;
+    }
+
+    .social-login p::after {
+      right: 0;
+    }
+
+    .social-icons {
+      display: flex;
+      justify-content: center;
+      gap: 1rem;
+    }
+
+    .social-btn {
+      width: 45px;
+      height: 45px;
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      background: white;
+      border: 1px solid #e0e0e0;
+      cursor: pointer;
+      transition: all 0.3s ease;
+    }
+
+    .social-btn:hover {
+      transform: translateY(-3px);
+      box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+    }
+
+    .left-section h2 {
+      font-size: 1.8rem;
+      font-weight: 700;
+      margin-bottom: 1rem;
+    }
+
+    .left-section h3 {
+      font-size: 1.2rem;
+      font-weight: 600;
+      margin-bottom: 2rem;
+      opacity: 0.9;
+    }
+
+    .login-btn {
+      display: inline-block;
+      padding: 12px 24px;
+      background: transparent;
+      color: white;
+      border: 2px solid white;
+      border-radius: 8px;
+      font-size: 1rem;
+      font-weight: 600;
+      cursor: pointer;
+      transition: all 0.3s ease;
+      margin-top: 1rem;
+      text-decoration: none;
+    }
+
+    .login-btn:hover {
+      background: rgba(255, 255, 255, 0.1);
+      transform: translateY(-2px);
+    }
+
+    @media (max-width: 768px) {
+      .container {
+        flex-direction: column;
+      }
+
+      .left-section,
+      .right-section {
+        padding: 3rem 2rem;
+      }
+    }
+  </style>
+</head>
+
+<body>
+  <div class="container">
+    <div class="left-section">
+      <h2>Already Signed In</h2>
+      <h3>Start Learning</h3>
+      <p>Already on board? Dive into your learning journey now!</p>
+      <a href="/login" class="login-btn">Login</a>
+    </div>
+
+    <div class="right-section">
+      <div class="register-header">
+        <h1 style="color: black;">Create Account</h1>
+        <p style="color: black;">Already have an account? <a href="/login" style="color: rgb(32, 97, 200);">Login</a></p>
+      </div>
+
+      <form id="signupForm">
+        <div class="input-group">
+          <label for="username">Username</label>
+          <input type="text" id="username" name="username" placeholder="Enter your username" required />
+        </div>
+
+        <div class="input-group">
+          <label for="email">Email</label>
+          <input type="email" id="email" name="email" placeholder="Enter your email" required />
+        </div>
+
+        <div class="input-group">
+          <label for="password">Password</label>
+          <input type="password" id="password" name="password" placeholder="Enter your password" required />
+        </div>
+
+        <button type="submit" class="register-btn">Sign Up</button>
+      </form>
+    </div>
+  </div>
+
+  <script>
+    document
+      .getElementById("signupForm")
+      .addEventListener("submit", async function (event) {
+        event.preventDefault();
+
+        const username = document.getElementById("username").value;
+        const email = document.getElementById("email").value;
+        const password = document.getElementById("password").value;
+
+        try {
+          const response = await fetch("http://localhost:3000/post", {
+            method: "POST",
+            headers: { "Content-Type": "application/json" },
+            body: JSON.stringify({ username, email, password }),
+          });
+          
+          const result = await response.json();
+          
+          if (response.ok && result.message === "User registered successfully!") {
+            alert("Registration successful! Click OK to be redirected to login page.");
+            setTimeout(() => {
+              window.location.href = "/login";
+            }, 1000);
+          } else {
+            alert(result.message || "Registration failed. Please try again.");
+          }
+        } catch (error) {
+          console.error("Registration error:", error);
+          alert("Registration failed. Please try again.");
+        }
+      });
+  </script>
+</body>
+
+</html>
