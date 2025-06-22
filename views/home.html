@@ -282,14 +282,18 @@
       .books-grid {
         display: grid;
         grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
-        gap: 20px; /* This ensures consistent spacing between cards */
+        gap: 20px;
+        /* This ensures consistent spacing between cards */
         margin-bottom: 2rem;
-        padding: 10px; /* Optional: Adds padding around the grid */
+        padding: 10px;
+        /* Optional: Adds padding around the grid */
       }
 
       .book-card {
-        width: 100%; /* Take full width of grid cell */
-        height: 440px; /* Increased height for button space */
+        width: 100%;
+        /* Take full width of grid cell */
+        height: 440px;
+        /* Increased height for button space */
         /* Remove any margin here - let the grid gap handle spacing */
         background: var(--card-bg);
         border-radius: 24px;
@@ -305,7 +309,8 @@
 
       .book-cover-container {
         width: 100%;
-        height: 240px;
+        height: 220px;
+        /* Reduced from 240px */
         overflow: hidden;
         position: relative;
       }
@@ -322,10 +327,10 @@
       }
 
       .book-info {
-        padding: 20px;
-        text-align: left;
-        color: var(--text-color);
-        background: var(--card-bg);
+        padding: 20px 20px 25px; /* Increased bottom padding */
+        height: calc(100% - 220px); /* Matches cover height */
+        display: flex;
+        flex-direction: column;
       }
 
       .book-title {
@@ -359,6 +364,8 @@
         align-items: center;
         justify-content: space-between;
         margin-top: auto;
+        margin-top: auto; /* Pushes buttons to bottom */
+        padding-top: 15px;
       }
 
       .book-price {
@@ -380,9 +387,10 @@
         background: var(--text-color);
         color: var(--card-bg);
         border: none;
-        padding: 12px 24px;
-        border-radius: 12px;
+        padding: 10px 18px;
+        /* Slightly reduced padding */
         font-size: 14px;
+        border-radius: 12px;
         font-weight: 600;
         cursor: pointer;
         transition: all 0.3s ease;
@@ -436,6 +444,7 @@
       .favorite-btn.active {
         color: #ff6b6b;
       }
+
       .dark-mode .book-title,
       .dark-mode .book-author {
         color: white;
