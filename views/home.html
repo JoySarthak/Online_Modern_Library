@@ -1305,7 +1305,7 @@
       let allBooks = [];
       let popularBooks = [];
       let searchTerm = "";
-      let visibleBooks = 4; // Number of books to show initially
+      let visibleBooks = 3; // Number of books to show initially
       let totalBooks = 0; // Total books available
 
       // Function to update date and time in real-time
@@ -1538,7 +1538,7 @@
 
             currentFilter = this.dataset.filter;
             currentPage = 1;
-            visibleBooks = 4; // Reset to initial visible count
+            visibleBooks = 3; // Reset to initial visible count
             fetchBooks(currentPage, currentFilter, searchTerm);
           });
         });
@@ -1567,7 +1567,7 @@
           searchTerm = this.value.trim();
           searchTimeout = setTimeout(() => {
             currentPage = 1;
-            visibleBooks = 4; // Reset to initial visible count
+            visibleBooks = 3; // Reset to initial visible count
             fetchBooks(currentPage, currentFilter, searchTerm);
           }, 500);
         });
@@ -1576,7 +1576,7 @@
         document
           .getElementById("showMoreBtn")
           .addEventListener("click", function () {
-            visibleBooks += 4; // Show 6 more books each time
+            visibleBooks += 3; // Show 6 more books each time
             updateVisibleBooks();
           });
 
