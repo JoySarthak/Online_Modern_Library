@@ -279,14 +279,18 @@
       }
 
       /* Modern Book Card Styles - Inspired by the image */
+      .books-grid {
+        display: grid;
+        grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+        gap: 20px; /* This ensures consistent spacing between cards */
+        margin-bottom: 2rem;
+        padding: 10px; /* Optional: Adds padding around the grid */
+      }
+
       .book-card {
-        width: 100%;
-        /* Take full width of grid cell */
-        height: 420px;
-        position: relative;
-        cursor: pointer;
-        transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
-        /* Remove this margin: margin: 15px; */
+        width: 100%; /* Take full width of grid cell */
+        height: 440px; /* Increased height for button space */
+        /* Remove any margin here - let the grid gap handle spacing */
         background: var(--card-bg);
         border-radius: 24px;
         box-shadow: 0 8px 24px rgba(0, 0, 0, 0.08);
@@ -432,16 +436,6 @@
       .favorite-btn.active {
         color: #ff6b6b;
       }
-
-      /* Sample books grid */
-      .books-grid {
-        display: grid;
-        grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
-        gap: 20px;
-        /* This creates consistent spacing between cards */
-        margin-bottom: 2rem;
-      }
-
       .dark-mode .book-title,
       .dark-mode .book-author {
         color: white;
