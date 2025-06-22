@@ -1412,15 +1412,13 @@
             bookCard.className = "book-card";
             bookCard.innerHTML = `
           <div class="book-cover-container">
-          <img class="book-cover" src="${
-          book.imageCoverLink
-          ? "https://drive.google.com/uc?export=view&id=" +
-          extractDriveFileId(book.imageCoverLink)
-          : "https://images.unsplash.com/photo-1543002588-bfa74002ed7e?w=300&h=240&fit=crop&auto=format"
-          }" 
-      alt="${book.title}"
-     onerror="this.onerror=null;this.src='https://images.unsplash.com/photo-1543002588-bfa74002ed7e?w=300&h=240&fit=crop&auto=format'">
-     </div>
+      <img class="book-cover" 
+       src="${
+         book.imageCoverLink ||
+         "https://postimage.me/images/2025/06/22/4373217_java_logo_logos_icon.png?w=300&h=240&fit=crop&auto=format"
+       }" 
+       alt="${book.title}">
+    </div>
      <div class="book-info">
     <h6 class="book-title">${book.title}</h6>
     <p class="book-author">${book.author}</p>
