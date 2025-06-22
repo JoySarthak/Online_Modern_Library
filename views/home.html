@@ -1413,8 +1413,12 @@
             bookCard.innerHTML = `
           <div class="book-cover-container">
       <img class="book-cover" 
-      src="${book.imageCoverLink || 'https://dl.dropboxusercontent.com/s/nrjpr24nsqfi5qdknislo/4373217_java_logo_logos_icon.png'}" 
-     alt="${book.title}">
+       src="${
+         book.imageCoverLink ||
+         "https://postimage.me/images/2025/06/22/4373217_java_logo_logos_icon.png?w=300&h=240&fit=crop&auto=format"
+       }" 
+       alt="${book.title}">
+    </div>
      <div class="book-info">
     <h6 class="book-title">${book.title}</h6>
     <p class="book-author">${book.author}</p>
