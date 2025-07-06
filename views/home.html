@@ -410,10 +410,40 @@
             color: #9ca3af;
         }
 
+        /* Mobile Navigation Buttons */
+        .mobile-nav-buttons {
+            margin-top: 2rem;
+            padding-top: 2rem;
+            border-top: 1px solid #e5e7eb;
+        }
+
+        .mobile-nav-btn {
+            margin-bottom: 12px;
+        }
+
+        .mobile-nav-btn.primary {
+            background: #4f46e5;
+            color: white;
+            box-shadow: 0 2px 4px rgba(79, 70, 229, 0.3);
+        }
+
+        .mobile-nav-btn.primary:hover {
+            background: #4338ca;
+            color: white;
+        }
+
+        .mobile-nav-btn.primary .sidebar-icon {
+            color: white;
+        }
+
         /* Responsive Design */
         @media (max-width: 768px) {
             .navbar-right .nav-btn {
                 display: none;
+            }
+
+            .mobile-nav-buttons {
+                display: block;
             }
 
             .hero-title {
@@ -426,6 +456,12 @@
 
             .books-grid {
                 grid-template-columns: 1fr;
+            }
+        }
+
+        @media (min-width: 1024px) {
+            .mobile-nav-buttons {
+                display: none;
             }
         }
 
@@ -681,6 +717,35 @@
                     </svg>
                     Coins
                 </a>
+                
+                <!-- Mobile-only navigation buttons -->
+                <div class="mobile-nav-buttons">
+                    <a href="/student" class="sidebar-link mobile-nav-btn">
+                        <svg class="sidebar-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                            <rect x="3" y="3" width="18" height="18" rx="2" ry="2"></rect>
+                            <line x1="9" y1="9" x2="15" y2="15"></line>
+                            <line x1="15" y1="9" x2="9" y2="15"></line>
+                        </svg>
+                        Dashboard
+                    </a>
+                    <a href="/login" class="sidebar-link mobile-nav-btn">
+                        <svg class="sidebar-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                            <path d="M15 3h4a2 2 0 0 1 2 2v14a2 2 0 0 1-2 2h-4"></path>
+                            <polyline points="10,17 15,12 10,7"></polyline>
+                            <line x1="15" y1="12" x2="3" y2="12"></line>
+                        </svg>
+                        Login
+                    </a>
+                    <a href="/register" class="sidebar-link mobile-nav-btn primary">
+                        <svg class="sidebar-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                            <path d="M16 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"></path>
+                            <circle cx="8.5" cy="7" r="4"></circle>
+                            <line x1="20" y1="8" x2="20" y2="14"></line>
+                            <line x1="23" y1="11" x2="17" y2="11"></line>
+                        </svg>
+                        Sign Up
+                    </a>
+                </div>
             </nav>
         </aside>
 
