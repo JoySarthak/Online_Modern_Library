@@ -479,6 +479,20 @@
             .overlay {
                 display: none !important;
             }
+
+            /* Hide menu and close buttons on desktop */
+            .menu-btn {
+                display: none;
+            }
+
+            .close-btn {
+                display: none;
+            }
+
+            /* Show sidebar title without close button */
+            .sidebar-header {
+                justify-content: center;
+            }
         }
          /* Add these new styles to your existing style section */
         
@@ -1018,7 +1032,7 @@
                     } else if (text === 'Sign Up') {
                         window.location.href = '/register';
                     } else if (text === 'Dashboard') {
-                        window.location.href = '/student';
+                        window.location.href = '/login';
                     }
                 });
             });

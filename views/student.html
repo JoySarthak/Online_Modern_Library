@@ -660,11 +660,39 @@
         background: rgba(30, 41, 59, 0.5);
       }
 
+      /* Mobile menu toggle button */
+      .mobile-menu-toggle {
+        display: none;
+        position: fixed;
+        top: 1rem;
+        left: 1rem;
+        z-index: 1000;
+        background: var(--primary-color);
+        color: white;
+        border: none;
+        border-radius: 8px;
+        padding: 12px;
+        cursor: pointer;
+        box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+        transition: all 0.3s ease;
+      }
+
+      .mobile-menu-toggle:hover {
+        background: var(--primary-dark);
+        transform: translateY(-2px);
+      }
+
+      .mobile-menu-toggle i {
+        font-size: 18px;
+      }
+
       /* Responsive design */
       @media (max-width: 1024px) {
         .sidebar {
           transform: translateX(-100%);
-          transition: transform 0.3s;
+          transition: transform 0.3s ease;
+          z-index: 999;
+          box-shadow: 2px 0 10px rgba(0, 0, 0, 0.1);
         }
 
         .sidebar.open {
@@ -673,22 +701,38 @@
 
         .main-content {
           margin-left: 0;
+          padding-top: 80px; /* Space for mobile menu button */
+        }
+
+        .mobile-menu-toggle {
+          display: block;
         }
 
         .stats-grid {
           grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+          gap: 16px;
+        }
+
+        .welcome-section h1 {
+          font-size: 24px;
+        }
+
+        .welcome-section p {
+          font-size: 14px;
         }
       }
 
       @media (max-width: 768px) {
         .main-content {
           padding: 1rem;
+          padding-top: 80px;
         }
 
         .top-bar {
           flex-direction: column;
           gap: 1rem;
           align-items: stretch;
+          margin-bottom: 1.5rem;
         }
 
         .search-container {
@@ -696,16 +740,386 @@
           margin-right: 0;
         }
 
+        .search-container input {
+          padding: 14px 16px 14px 48px;
+          font-size: 16px; /* Prevents zoom on iOS */
+        }
+
+        .top-actions {
+          justify-content: center;
+          gap: 16px;
+        }
+
+        .action-btn {
+          padding: 12px;
+          font-size: 16px;
+        }
+
+        .welcome-section {
+          margin-bottom: 1.5rem;
+          text-align: center;
+        }
+
+        .welcome-section h1 {
+          font-size: 22px;
+          margin-bottom: 6px;
+        }
+
+        .welcome-section p {
+          font-size: 14px;
+        }
+
+        .stats-grid {
+          grid-template-columns: 1fr;
+          gap: 16px;
+          margin-bottom: 2rem;
+        }
+
+        .stat-card {
+          padding: 20px;
+        }
+
+        .stat-card h3 {
+          font-size: 14px;
+        }
+
+        .stat-card .stat-number {
+          font-size: 28px;
+        }
+
+        .stat-card .stat-subtitle {
+          font-size: 12px;
+        }
+
+        .section-header {
+          flex-direction: column;
+          gap: 12px;
+          align-items: flex-start;
+        }
+
+        .section-title {
+          font-size: 18px;
+        }
+
+        .filter-controls {
+          width: 100%;
+        }
+
+        .filter-select {
+          width: 100%;
+          padding: 10px 12px;
+          font-size: 16px;
+        }
+
         .books-grid {
           grid-template-columns: 1fr;
+          gap: 16px;
+        }
+
+        .book-card {
+          margin-bottom: 0;
+        }
+
+        .book-header {
+          padding: 16px;
+          flex-direction: column;
+          text-align: center;
+          gap: 12px;
+        }
+
+        .book-icon {
+          width: 40px;
+          height: 40px;
+          font-size: 16px;
+        }
+
+        .book-info h3 {
+          font-size: 16px;
+        }
+
+        .book-info p {
+          font-size: 13px;
+        }
+
+        .book-details {
+          padding: 12px 16px;
+        }
+
+        .book-detail-item {
+          font-size: 13px;
+          padding: 4px 0;
         }
 
         .book-actions {
           flex-direction: column;
+          gap: 12px;
+          padding: 12px 16px;
         }
 
         .days-input {
           width: 100%;
+          padding: 10px 12px;
+          font-size: 16px;
+        }
+
+        .btn-primary {
+          width: 100%;
+          padding: 12px 16px;
+          font-size: 16px;
+        }
+
+        .status-badge {
+          font-size: 11px;
+          padding: 3px 8px;
+        }
+
+        .empty-state {
+          padding: 3rem 1rem;
+        }
+
+        .empty-state i {
+          font-size: 3rem;
+        }
+
+        .empty-state h3 {
+          font-size: 1.1rem;
+        }
+
+        .empty-state p {
+          font-size: 14px;
+        }
+      }
+
+      @media (max-width: 480px) {
+        .main-content {
+          padding: 0.75rem;
+          padding-top: 70px;
+        }
+
+        .mobile-menu-toggle {
+          top: 0.75rem;
+          left: 0.75rem;
+          padding: 10px;
+        }
+
+        .mobile-menu-toggle i {
+          font-size: 16px;
+        }
+
+        .top-bar {
+          margin-bottom: 1rem;
+        }
+
+        .welcome-section {
+          margin-bottom: 1rem;
+        }
+
+        .welcome-section h1 {
+          font-size: 20px;
+        }
+
+        .welcome-section p {
+          font-size: 13px;
+        }
+
+        .stats-grid {
+          gap: 12px;
+          margin-bottom: 1.5rem;
+        }
+
+        .stat-card {
+          padding: 16px;
+        }
+
+        .stat-card h3 {
+          font-size: 13px;
+        }
+
+        .stat-card .stat-number {
+          font-size: 24px;
+        }
+
+        .stat-card .stat-subtitle {
+          font-size: 11px;
+        }
+
+        .section-header {
+          margin-bottom: 16px;
+        }
+
+        .section-title {
+          font-size: 16px;
+        }
+
+        .books-grid {
+          gap: 12px;
+        }
+
+        .book-header {
+          padding: 12px;
+        }
+
+        .book-details {
+          padding: 10px 12px;
+        }
+
+        .book-actions {
+          padding: 10px 12px;
+        }
+
+        .btn-primary {
+          padding: 10px 14px;
+          font-size: 14px;
+        }
+
+        .toast {
+          bottom: 10px;
+          right: 10px;
+          left: 10px;
+          padding: 12px 16px;
+          font-size: 14px;
+        }
+      }
+
+      /* Landscape orientation adjustments */
+      @media (max-width: 768px) and (orientation: landscape) {
+        .main-content {
+          padding-top: 60px;
+        }
+
+        .mobile-menu-toggle {
+          top: 0.5rem;
+          left: 0.5rem;
+          padding: 8px;
+        }
+
+        .stats-grid {
+          grid-template-columns: repeat(2, 1fr);
+        }
+
+        .books-grid {
+          grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+        }
+      }
+
+      /* High DPI displays */
+      @media (-webkit-min-device-pixel-ratio: 2), (min-resolution: 192dpi) {
+        .book-card,
+        .stat-card {
+          border-width: 0.5px;
+        }
+      }
+
+      /* Touch device optimizations */
+      @media (hover: none) and (pointer: coarse) {
+        .book-card:hover,
+        .stat-card:hover,
+        .sidebar-nav a:hover,
+        .action-btn:hover,
+        .btn-primary:hover {
+          transform: none;
+        }
+
+        .book-card:active,
+        .stat-card:active {
+          transform: scale(0.98);
+        }
+
+        .btn-primary:active {
+          transform: scale(0.95);
+        }
+
+        /* Increase touch targets */
+        .sidebar-nav a {
+          padding: 16px;
+          min-height: 48px;
+        }
+
+        .action-btn {
+          padding: 14px;
+          min-width: 44px;
+          min-height: 44px;
+        }
+
+        .btn-primary {
+          min-height: 44px;
+        }
+
+        .days-input {
+          min-height: 44px;
+        }
+
+        /* Better touch feedback */
+        .book-card:active,
+        .stat-card:active {
+          background-color: rgba(99, 102, 241, 0.05);
+        }
+
+        .btn-primary:active {
+          background: var(--primary-dark);
+          box-shadow: inset 0 2px 4px rgba(0, 0, 0, 0.2);
+        }
+
+        /* Prevent text selection on interactive elements */
+        .book-card,
+        .stat-card,
+        .btn-primary,
+        .action-btn {
+          -webkit-user-select: none;
+          -moz-user-select: none;
+          -ms-user-select: none;
+          user-select: none;
+        }
+      }
+
+      /* Mobile-specific improvements */
+      @media (max-width: 768px) {
+        /* Smooth scrolling for mobile */
+        html {
+          scroll-behavior: smooth;
+        }
+
+        /* Better focus states for accessibility */
+        .btn-primary:focus,
+        .action-btn:focus,
+        .days-input:focus,
+        .search-container input:focus {
+          outline: 2px solid var(--primary-color);
+          outline-offset: 2px;
+        }
+
+        /* Improved loading states for mobile */
+        .loading-spinner {
+          width: 24px;
+          height: 24px;
+          border-width: 3px;
+        }
+
+        /* Better spacing for mobile forms */
+        .book-actions {
+          gap: 16px;
+        }
+
+        /* Improved status badges for mobile */
+        .status-badge {
+          display: inline-block;
+          white-space: nowrap;
+        }
+      }
+
+      /* Prevent horizontal scroll on mobile */
+      @media (max-width: 480px) {
+        body {
+          overflow-x: hidden;
+        }
+
+        .dashboard-container {
+          min-width: 0;
+        }
+
+        .main-content {
+          min-width: 0;
+          overflow-x: hidden;
         }
       }
 
@@ -768,19 +1182,24 @@
 
   <body>
     <div class="dashboard-container">
+      <!-- Mobile Menu Toggle -->
+      <button class="mobile-menu-toggle" onclick="toggleMobileMenu()">
+        <i class="fas fa-bars"></i>
+      </button>
+
       <!-- Sidebar -->
-      <div class="sidebar">
+      <div class="sidebar" id="sidebar">
         <div class="sidebar-brand">
           <i class="fas fa-book"></i>
           <span>Student Dashboard</span>
         </div>
 
         <nav class="sidebar-nav">
-          <a href="#" onclick="showSection('available-books')">
+          <a href="#" onclick="handleNavClick('available-books')">
             <i class="fas fa-book"></i>
             <span>Available Books</span>
           </a>
-          <a href="#" onclick="showSection('my-books')">
+          <a href="#" onclick="handleNavClick('my-books')">
             <i class="fas fa-book-reader"></i>
             <span>My Books</span>
           </a>
@@ -913,6 +1332,41 @@
           event.currentTarget.innerHTML =
             '<i class="fas fa-moon"></i> Dark Mode';
         }
+      }
+
+      // Mobile menu functionality
+      function toggleMobileMenu() {
+        const sidebar = document.getElementById('sidebar');
+        const toggleBtn = document.querySelector('.mobile-menu-toggle i');
+        
+        sidebar.classList.toggle('open');
+        
+        // Update toggle button icon
+        if (sidebar.classList.contains('open')) {
+          toggleBtn.classList.remove('fa-bars');
+          toggleBtn.classList.add('fa-times');
+        } else {
+          toggleBtn.classList.remove('fa-times');
+          toggleBtn.classList.add('fa-bars');
+        }
+      }
+
+      // Close mobile menu when clicking outside
+      function closeMobileMenu() {
+        const sidebar = document.getElementById('sidebar');
+        const toggleBtn = document.querySelector('.mobile-menu-toggle i');
+        
+        if (sidebar.classList.contains('open')) {
+          sidebar.classList.remove('open');
+          toggleBtn.classList.remove('fa-times');
+          toggleBtn.classList.add('fa-bars');
+        }
+      }
+
+      // Close mobile menu when clicking on a nav link
+      function handleNavClick(sectionId) {
+        showSection(sectionId);
+        closeMobileMenu();
       }
 
       // Check for saved dark mode preference on load
@@ -1485,12 +1939,63 @@
         fetchUserData();
         fetchAvailableBooks();
         updateStats();
+        
         // Set default section based on URL hash
         const hash = window.location.hash.substring(1);
         if (hash === "my-books") {
           showSection("my-books");
         } else {
           showSection("available-books");
+        }
+
+        // Add event listeners for mobile menu
+        document.addEventListener('click', function(event) {
+          const sidebar = document.getElementById('sidebar');
+          const mobileToggle = document.querySelector('.mobile-menu-toggle');
+          
+          // Close mobile menu when clicking outside
+          if (sidebar.classList.contains('open') && 
+              !sidebar.contains(event.target) && 
+              !mobileToggle.contains(event.target)) {
+            closeMobileMenu();
+          }
+        });
+
+        // Handle window resize
+        window.addEventListener('resize', function() {
+          if (window.innerWidth > 1024) {
+            closeMobileMenu();
+          }
+        });
+
+        // Add touch/swipe support for mobile
+        let touchStartX = 0;
+        let touchEndX = 0;
+
+        document.addEventListener('touchstart', function(event) {
+          touchStartX = event.changedTouches[0].screenX;
+        });
+
+        document.addEventListener('touchend', function(event) {
+          touchEndX = event.changedTouches[0].screenX;
+          handleSwipe();
+        });
+
+        function handleSwipe() {
+          const sidebar = document.getElementById('sidebar');
+          const swipeThreshold = 50;
+          
+          if (touchEndX < touchStartX - swipeThreshold) {
+            // Swipe left - close menu
+            if (sidebar.classList.contains('open')) {
+              closeMobileMenu();
+            }
+          } else if (touchEndX > touchStartX + swipeThreshold) {
+            // Swipe right - open menu (only if on mobile)
+            if (window.innerWidth <= 1024 && !sidebar.classList.contains('open')) {
+              toggleMobileMenu();
+            }
+          }
         }
       });
     </script>
