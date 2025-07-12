@@ -371,32 +371,31 @@ app.get("/api/books", async (req, res) => {
   try {
     await connectToDatabase();
     const page = parseInt(req.query.page) || 1;
-    const limit = 10;
+    const limit = 10; // Keep consistent with frontend
     const skip = (page - 1) * limit;
-    const search = req.query.search || '';
-    const sort = req.query.sort || '';
-
-    let query = { availableCopies: { $gt: 0 } };
-    let sortOption = {};
-
-    if (search) {
-      query.$or = [
-        { title: { $regex: search, $options: 'i' } },
-        { author: { $regex: search, $options: 'i' } },
-        { category: { $regex: search, $options: 'i' } } // Add category to search
-      ];
+    
+    // Build query for search functionality
+    let query = {};
+    if (req.query.search && req.query.search.trim()) {
+      const searchTerm = req.query.search.trim();
+      query = {
+        $or: [
+          { title: { $regex: searchTerm, $options: 'i' } },
+          { author: { $regex: searchTerm, $options: 'i' } },
+          { category: { $regex: searchTerm, $options: 'i' } }
+        ]
+      };
     }
-
-    if (sort === 'borrows') {
-      sortOption = { borrowCount: -1 };
-    }
-
+    
+    const total = await Book.countDocuments(query);
     const books = await Book.find(query)
-      .select('title author copies availableCopies isbn link category imageCoverLink borrowCount') // Add category and imageCoverLink
-      .sort(sortOption)
+      .select('title author copies availableCopies isbn link category imageCoverLink borrowCount')
+      .sort({ title: 1 }) // Sort by title alphabetically
       .skip(skip)
       .limit(limit);
 
+    // Set total count header
+    res.set('X-Total-Count', total);
     res.json(books);
   } catch (error) {
     console.error("Error fetching books:", error);
