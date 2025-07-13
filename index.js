@@ -126,24 +126,61 @@ app.post("/post", async (req, res) => {
   try {
     await connectToDatabase();
     const { username, email, password } = req.body;
+    
+    // Better validation
+    if (!username || !email || !password) {
+      return res.status(400).json({ 
+        success: false,
+        message: "All fields are required" 
+      });
+    }
+    
+    // Check email format
+    const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+    if (!emailRegex.test(email)) {
+      return res.status(400).json({
+        success: false,
+        message: "Invalid email format"
+      });
+    }
+    
     const existingUser = await User.findOne({
       $or: [{ username }, { email }],
     });
+    
     if (existingUser) {
-      return res
-        .status(400)
-        .json({ message: "User already exists with this username or email" });
+      return res.status(400).json({ 
+        success: false,
+        message: existingUser.username === username 
+          ? "Username already exists" 
+          : "Email already registered"
+      });
     }
+    
     const hashedPassword = await bcrypt.hash(password, 10);
     const newUser = new User({
       username,
       email,
       password: hashedPassword,
     });
+    
     await newUser.save();
-    res.status(201).json({ message: "User registered successfully!" });
+    
+    res.status(201).json({ 
+      success: true,
+      message: "User registered successfully!",
+      user: {
+        id: newUser._id,
+        username: newUser.username
+      }
+    });
   } catch (error) {
-    res.status(500).json({ error: "Error registering user" });
+    console.error("Registration error:", error);
+    res.status(500).json({ 
+      success: false,
+      error: "Internal server error",
+      details: error.message 
+    });
   }
 });
 
