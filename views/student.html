@@ -284,6 +284,34 @@
         margin-bottom: 3rem;
       }
 
+      /* Status Cards Row Layout */
+      #stats-cards {
+        display: flex;
+        gap: 20px;
+        margin-bottom: 3rem;
+      }
+      #stats-cards .stat-card {
+        flex: 1 1 0;
+        min-width: 200px;
+      }
+      @media (max-width: 900px) {
+        #stats-cards {
+          flex-direction: column;
+          gap: 16px;
+        }
+        #stats-cards .stat-card {
+          min-width: 0;
+          width: 100% !important;
+          margin-bottom: 12px;
+          box-shadow: 0 2px 8px rgba(99,102,241,0.10);
+          border-radius: 14px;
+          padding: 18px 12px;
+        }
+        #stats-cards .stat-card:last-child {
+          margin-bottom: 0;
+        }
+      }
+
       .stat-card {
         background: white;
         padding: 24px;
@@ -1177,6 +1205,207 @@
       .dark-mode .toast {
         box-shadow: 0 10px 40px rgba(0, 0, 0, 0.4);
       }
+      /* Profile Menu Styles */
+      .profile-menu {
+        display: none;
+        background: rgba(139, 92, 246, 0.2);
+        border-radius: 8px;
+        margin-top: 12px;
+        overflow: hidden;
+        transition: all 0.3s ease;
+      }
+
+      .profile-menu a {
+        display: flex;
+        align-items: center;
+        gap: 10px;
+        padding: 12px 16px;
+        color: #a5b4fc;
+        text-decoration: none;
+        font-size: 14px;
+        transition: all 0.2s ease;
+      }
+
+      .profile-menu a:hover {
+        background: rgba(139, 92, 246, 0.3);
+        color: white;
+        padding-left: 20px;
+      }
+
+      .profile-menu a i {
+        width: 20px;
+        text-align: center;
+      }
+
+      .profile-menu.open {
+        display: block;
+      }
+
+      #profile-chevron {
+        margin-left: auto;
+        transition: transform 0.3s ease;
+      }
+
+      #profile-chevron.rotate {
+        transform: rotate(180deg);
+      }
+
+      /* Profile Sections */
+      .profile-section {
+        display: none;
+        padding: 20px;
+        background: var(--surface);
+        border-radius: 12px;
+        margin-top: 20px;
+        border: 1px solid var(--border-color);
+      }
+
+      .profile-section.active {
+        display: block;
+      }
+
+      .profile-form {
+        display: flex;
+        flex-direction: column;
+        gap: 16px;
+      }
+
+      .profile-form label {
+        font-size: 14px;
+        color: var(--text-secondary);
+        margin-bottom: -10px;
+      }
+
+      .profile-form input {
+        padding: 12px 16px;
+        border: 2px solid var(--border-color);
+        border-radius: 8px;
+        font-size: 14px;
+        transition: all 0.2s;
+        width: 100%;
+      }
+
+      .profile-form input:focus {
+        outline: none;
+        border-color: var(--primary-color);
+        box-shadow: 0 0 0 3px rgba(99, 102, 241, 0.1);
+      }
+
+      .profile-form button {
+        margin-top: 10px;
+      }
+
+      .form-message {
+        margin-top: 10px;
+        padding: 10px;
+        border-radius: 8px;
+        font-size: 14px;
+        display: none;
+      }
+
+      .form-message.success {
+        background: #d1fae5;
+        color: #065f46;
+        display: block;
+      }
+
+      .form-message.error {
+        background: #fee2e2;
+        color: #991b1b;
+        display: block;
+      }
+
+      /* Dark mode adjustments */
+      .dark-mode .profile-section {
+        background: var(--surface);
+        border-color: var(--border-color);
+      }
+
+      .dark-mode .profile-menu {
+        background: rgba(139, 92, 246, 0.1);
+      }
+
+      .dark-mode .profile-menu a {
+        color: #a5b4fc;
+      }
+
+      .dark-mode .profile-menu a:hover {
+        background: rgba(139, 92, 246, 0.2);
+        color: white;
+      }
+
+      /* FORCE STATS CARDS HORIZONTAL LAYOUT */
+      #stats-cards {
+        display: flex !important;
+        flex-direction: row !important;
+        gap: 20px;
+        margin-bottom: 3rem;
+        width: 100%;
+      }
+      #stats-cards .stat-card {
+        flex: 1 1 0;
+        min-width: 200px;
+        max-width: 100%;
+        width: auto !important;
+        display: flex;
+        flex-direction: column;
+      }
+      @media (max-width: 900px) {
+        #stats-cards {
+          flex-direction: column !important;
+        }
+      }
+      @media (max-width: 600px) {
+        #stats-cards {
+          flex-direction: column !important;
+          gap: 16px;
+          padding: 0 8px;
+        }
+        #stats-cards .stat-card,
+        #stats-cards .stat-card * {
+          color: #fff !important;
+        }
+        #stats-cards .stat-card {
+          min-width: 0;
+          width: 100% !important;
+          margin: 0;
+          box-shadow: 0 2px 12px rgba(99,102,241,0.13);
+          border-radius: 16px;
+          padding: 16px 10px;
+          font-size: 0.98rem;
+          min-height: unset !important;
+          height: auto !important;
+          overflow: visible !important;
+          display: flex !important;
+          flex-direction: column !important;
+          align-items: flex-start !important;
+          justify-content: center !important;
+        }
+        #stats-cards .stat-card h3,
+        #stats-cards .stat-card .stat-number,
+        #stats-cards .stat-card .stat-subtitle {
+          display: block !important;
+          visibility: visible !important;
+          opacity: 1 !important;
+          color: #fff !important;
+          text-align: left !important;
+          white-space: normal !important;
+          word-break: break-word !important;
+        }
+        #stats-cards .stat-card h3 {
+          font-size: 1rem;
+          margin-bottom: 8px;
+        }
+        #stats-cards .stat-number {
+          font-size: 1.3rem;
+          margin-bottom: 4px;
+        }
+        #stats-cards .stat-subtitle {
+          font-size: 0.95rem;
+        }
+      }
+
+      
     </style>
   </head>
 
@@ -1213,7 +1442,8 @@
           </a>
         </nav>
 
-        <div class="sidebar-user">
+        <!-- Replace the sidebar-user div with this -->
+        <div class="sidebar-user" onclick="toggleProfileMenu()">
           <div class="user-info">
             <div class="user-avatar">
               <i class="fas fa-user"></i>
@@ -1222,6 +1452,21 @@
               <h4 id="username">Loading...</h4>
               <p>Start learning</p>
             </div>
+            <i class="fas fa-chevron-down" id="profile-chevron"></i>
+          </div>
+          <div class="profile-menu" id="profile-menu">
+            <a href="#" onclick="showProfileSection('change-username')">
+              <i class="fas fa-user-edit"></i> Change Username
+            </a>
+            <a href="#" onclick="showProfileSection('change-password')">
+              <i class="fas fa-key"></i> Change Password
+            </a>
+            <a href="#" onclick="showProfileSection('contact-help')">
+              <i class="fas fa-question-circle"></i> Contact Help
+            </a>
+            <a href="#" onclick="showProfileSection('recent-updates')">
+              <i class="fas fa-bell"></i> Recent Updates
+            </a>
           </div>
         </div>
       </div>
@@ -1256,6 +1501,85 @@
 
         <!-- Stats Cards -->
         <div class="stats-grid">
+          <div class="profile-section" id="change-username-section">
+            <h3>Change Username</h3>
+            <form class="profile-form" onsubmit="changeUsername(event)">
+              <div>
+                <label>Current Username</label>
+                <input type="text" id="current-username" readonly />
+              </div>
+              <div>
+                <label>New Username</label>
+                <input
+                  type="text"
+                  id="new-username"
+                  required
+                  minlength="3"
+                  maxlength="20"
+                />
+              </div>
+              <div>
+                <label>Confirm Password</label>
+                <input
+                  type="password"
+                  id="username-confirm-password"
+                  required
+                />
+              </div>
+              <button type="submit" class="btn-primary">
+                <i class="fas fa-save"></i> Update Username
+              </button>
+              <div class="form-message" id="username-message"></div>
+            </form>
+          </div>
+
+          <div class="profile-section" id="change-password-section">
+            <h3>Change Password</h3>
+            <form class="profile-form" onsubmit="changePassword(event)">
+              <div>
+                <label>Current Password</label>
+                <input type="password" id="current-password" required />
+              </div>
+              <div>
+                <label>New Password</label>
+                <input
+                  type="password"
+                  id="new-password"
+                  required
+                  minlength="4"
+                />
+              </div>
+              <div>
+                <label>Confirm New Password</label>
+                <input type="password" id="confirm-password" required />
+              </div>
+              <button type="submit" class="btn-primary">
+                <i class="fas fa-save"></i> Update Password
+              </button>
+              <div class="form-message" id="password-message"></div>
+            </form>
+          </div>
+
+          <div class="profile-section" id="contact-help-section">
+            <h3>Contact Help</h3>
+            <p>For any assistance, please contact our support team:</p>
+            <p><i class="fas fa-envelope"></i> support@library.com</p>
+            <p><i class="fas fa-phone"></i> +1 (555) 123-4567</p>
+          </div>
+
+          <div class="profile-section" id="recent-updates-section">
+            <h3>Recent Updates</h3>
+            <div class="update-item">
+              <p><strong>June 15, 2023</strong></p>
+              <p>New feature: You can now renew books online!</p>
+            </div>
+            <div class="update-item">
+              <p><strong>May 28, 2023</strong></p>
+              <p>Library will be closed on June 1st for maintenance.</p>
+            </div>
+          </div>
+        </div>
+        <div id="stats-cards">
           <div class="stat-card purple">
             <div class="stat-card-content">
               <h3>Books Borrowed</h3>
@@ -1336,30 +1660,30 @@
 
       // Mobile menu functionality
       function toggleMobileMenu() {
-        const sidebar = document.getElementById('sidebar');
-        const toggleBtn = document.querySelector('.mobile-menu-toggle i');
-        
-        sidebar.classList.toggle('open');
-        
+        const sidebar = document.getElementById("sidebar");
+        const toggleBtn = document.querySelector(".mobile-menu-toggle i");
+
+        sidebar.classList.toggle("open");
+
         // Update toggle button icon
-        if (sidebar.classList.contains('open')) {
-          toggleBtn.classList.remove('fa-bars');
-          toggleBtn.classList.add('fa-times');
+        if (sidebar.classList.contains("open")) {
+          toggleBtn.classList.remove("fa-bars");
+          toggleBtn.classList.add("fa-times");
         } else {
-          toggleBtn.classList.remove('fa-times');
-          toggleBtn.classList.add('fa-bars');
+          toggleBtn.classList.remove("fa-times");
+          toggleBtn.classList.add("fa-bars");
         }
       }
 
       // Close mobile menu when clicking outside
       function closeMobileMenu() {
-        const sidebar = document.getElementById('sidebar');
-        const toggleBtn = document.querySelector('.mobile-menu-toggle i');
-        
-        if (sidebar.classList.contains('open')) {
-          sidebar.classList.remove('open');
-          toggleBtn.classList.remove('fa-times');
-          toggleBtn.classList.add('fa-bars');
+        const sidebar = document.getElementById("sidebar");
+        const toggleBtn = document.querySelector(".mobile-menu-toggle i");
+
+        if (sidebar.classList.contains("open")) {
+          sidebar.classList.remove("open");
+          toggleBtn.classList.remove("fa-times");
+          toggleBtn.classList.add("fa-bars");
         }
       }
 
@@ -1392,29 +1716,239 @@
             '<span class="loading-spinner"></span>';
 
           // If using local storage (JWT authentication)
-          const storedUsername = localStorage.getItem("username");
-          if (storedUsername) {
-            document.getElementById("username").textContent = storedUsername;
-            document.getElementById("welcome-username").textContent =
-              storedUsername;
-            return;
+          const token = localStorage.getItem("token");
+          if (token) {
+            try {
+              const decoded = jwt_decode(token);
+              document.getElementById("username").textContent =
+                decoded.username;
+              document.getElementById("welcome-username").textContent =
+                decoded.username;
+              localStorage.setItem("username", decoded.username);
+              return;
+            } catch (e) {
+              console.log("Token decode error:", e);
+            }
           }
 
           // If using an API session to get user details
-          const response = await fetch("/api/user/profile"); // Adjust API endpoint as needed
+          const response = await fetch("/api/user/profile", {
+            headers: { Authorization: `Bearer ${token}` },
+          });
+
           if (!response.ok) throw new Error("User not logged in");
 
           const data = await response.json();
           document.getElementById("username").textContent = data.username;
           document.getElementById("welcome-username").textContent =
             data.username;
+          localStorage.setItem("username", data.username);
 
-          // Update stats (mock data - replace with actual API calls)
+          // Update stats
           updateStats();
         } catch (error) {
           console.error("Error fetching user data:", error);
           document.getElementById("username").textContent = "Guest";
         }
+      }
+      // Profile Menu Functions
+      function toggleProfileMenu() {
+        const menu = document.getElementById("profile-menu");
+        const chevron = document.getElementById("profile-chevron");
+
+        menu.classList.toggle("open");
+        chevron.classList.toggle("rotate");
+      }
+
+      function showProfileSection(sectionId) {
+        // Hide all profile sections
+        document.querySelectorAll(".profile-section").forEach((section) => {
+          section.classList.remove("active");
+        });
+
+        // Hide all book sections
+        document.querySelectorAll(".books-section").forEach((section) => {
+          section.style.display = "none";
+        });
+
+        // Hide stats cards
+        document.getElementById("stats-cards").style.display = "none";
+
+        // Show the selected section
+        document.getElementById(`${sectionId}-section`).classList.add("active");
+
+        // If showing username section, populate current username
+        if (sectionId === "change-username") {
+          document.getElementById("current-username").value =
+            document.getElementById("username").textContent;
+        }
+
+        // Close the profile menu on mobile
+        if (window.innerWidth <= 1024) {
+          toggleProfileMenu();
+        }
+      }
+
+      async function changeUsername(event) {
+        event.preventDefault();
+
+        const newUsername = document.getElementById("new-username").value;
+        const confirmPassword = document.getElementById(
+          "username-confirm-password"
+        ).value;
+        const messageEl = document.getElementById("username-message");
+
+        // Basic validation
+        if (newUsername.length < 3) {
+          showMessage(
+            messageEl,
+            "Username must be at least 3 characters",
+            "error"
+          );
+          return;
+        }
+
+        if (!confirmPassword) {
+          showMessage(
+            messageEl,
+            "Please enter your password to confirm",
+            "error"
+          );
+          return;
+        }
+
+        const button = event.target.querySelector('button[type="submit"]');
+        const originalText = button.innerHTML;
+        button.innerHTML = '<span class="loading-spinner"></span> Updating...';
+        button.disabled = true;
+
+        try {
+          const token = localStorage.getItem("token");
+          const response = await fetch("/api/user/change-username", {
+            method: "POST",
+            headers: {
+              "Content-Type": "application/json",
+              Authorization: `Bearer ${token}`,
+            },
+            body: JSON.stringify({
+              newUsername,
+              password: confirmPassword,
+            }),
+          });
+
+          const result = await response.json();
+
+          if (response.ok) {
+            showMessage(messageEl, "Username updated successfully!", "success");
+            // Update the username display
+            document.getElementById("username").textContent = newUsername;
+            document.getElementById("welcome-username").textContent =
+              newUsername;
+            document.getElementById("current-username").value = newUsername;
+            // Clear form
+            document.getElementById("new-username").value = "";
+            document.getElementById("username-confirm-password").value = "";
+
+            // Update token if the server returned a new one
+            if (result.token) {
+              localStorage.setItem("token", result.token);
+            }
+          } else {
+            showMessage(
+              messageEl,
+              result.error || "Failed to update username",
+              "error"
+            );
+          }
+        } catch (error) {
+          console.error("Error changing username:", error);
+          showMessage(messageEl, "Network error. Please try again.", "error");
+        } finally {
+          button.innerHTML = originalText;
+          button.disabled = false;
+        }
+      }
+
+      async function changePassword(event) {
+        event.preventDefault();
+
+        const currentPassword =
+          document.getElementById("current-password").value;
+        const newPassword = document.getElementById("new-password").value;
+        const confirmPassword =
+          document.getElementById("confirm-password").value;
+        const messageEl = document.getElementById("password-message");
+
+        // Validation
+        if (newPassword.length < 4) {
+          showMessage(
+            messageEl,
+            "Password must be at least 4 characters",
+            "error"
+          );
+          return;
+        }
+
+        if (newPassword !== confirmPassword) {
+          showMessage(messageEl, "New passwords do not match", "error");
+          return;
+        }
+
+        const button = event.target.querySelector('button[type="submit"]');
+        const originalText = button.innerHTML;
+        button.innerHTML = '<span class="loading-spinner"></span> Updating...';
+        button.disabled = true;
+
+        try {
+          const token = localStorage.getItem("token");
+          const response = await fetch("/api/user/change-password", {
+            method: "POST",
+            headers: {
+              "Content-Type": "application/json",
+              Authorization: `Bearer ${token}`,
+            },
+            body: JSON.stringify({
+              currentPassword,
+              newPassword,
+            }),
+          });
+
+          const result = await response.json();
+
+          if (response.ok) {
+            showMessage(messageEl, "Password updated successfully!", "success");
+            // Clear form
+            document.getElementById("current-password").value = "";
+            document.getElementById("new-password").value = "";
+            document.getElementById("confirm-password").value = "";
+
+            // Update token if the server returned a new one
+            if (result.token) {
+              localStorage.setItem("token", result.token);
+            }
+          } else {
+            showMessage(
+              messageEl,
+              result.error || "Failed to update password",
+              "error"
+            );
+          }
+        } catch (error) {
+          console.error("Error changing password:", error);
+          showMessage(messageEl, "Network error. Please try again.", "error");
+        } finally {
+          button.innerHTML = originalText;
+          button.disabled = false;
+        }
+      }
+
+      function showMessage(element, message, type) {
+        element.textContent = message;
+        element.className = `form-message ${type}`;
+        setTimeout(() => {
+          element.className = "form-message";
+          element.textContent = "";
+        }, 5000);
       }
 
       // Function to update statistics (mock implementation)
@@ -1766,6 +2300,14 @@
         });
         document.getElementById(sectionId).style.display = "block";
 
+        // Hide all profile sections
+        document.querySelectorAll(".profile-section").forEach((section) => {
+          section.classList.remove("active");
+        });
+
+        // Show stats cards
+        document.getElementById("stats-cards").style.display = "block";
+
         // Update active nav link
         document.querySelectorAll(".nav-right a").forEach((link) => {
           link.classList.remove("active");
@@ -1939,7 +2481,7 @@
         fetchUserData();
         fetchAvailableBooks();
         updateStats();
-        
+
         // Set default section based on URL hash
         const hash = window.location.hash.substring(1);
         if (hash === "my-books") {
@@ -1949,20 +2491,22 @@
         }
 
         // Add event listeners for mobile menu
-        document.addEventListener('click', function(event) {
-          const sidebar = document.getElementById('sidebar');
-          const mobileToggle = document.querySelector('.mobile-menu-toggle');
-          
+        document.addEventListener("click", function (event) {
+          const sidebar = document.getElementById("sidebar");
+          const mobileToggle = document.querySelector(".mobile-menu-toggle");
+
           // Close mobile menu when clicking outside
-          if (sidebar.classList.contains('open') && 
-              !sidebar.contains(event.target) && 
-              !mobileToggle.contains(event.target)) {
+          if (
+            sidebar.classList.contains("open") &&
+            !sidebar.contains(event.target) &&
+            !mobileToggle.contains(event.target)
+          ) {
             closeMobileMenu();
           }
         });
 
         // Handle window resize
-        window.addEventListener('resize', function() {
+        window.addEventListener("resize", function () {
           if (window.innerWidth > 1024) {
             closeMobileMenu();
           }
@@ -1972,27 +2516,30 @@
         let touchStartX = 0;
         let touchEndX = 0;
 
-        document.addEventListener('touchstart', function(event) {
+        document.addEventListener("touchstart", function (event) {
           touchStartX = event.changedTouches[0].screenX;
         });
 
-        document.addEventListener('touchend', function(event) {
+        document.addEventListener("touchend", function (event) {
           touchEndX = event.changedTouches[0].screenX;
           handleSwipe();
         });
 
         function handleSwipe() {
-          const sidebar = document.getElementById('sidebar');
+          const sidebar = document.getElementById("sidebar");
           const swipeThreshold = 50;
-          
+
           if (touchEndX < touchStartX - swipeThreshold) {
             // Swipe left - close menu
-            if (sidebar.classList.contains('open')) {
+            if (sidebar.classList.contains("open")) {
               closeMobileMenu();
             }
           } else if (touchEndX > touchStartX + swipeThreshold) {
             // Swipe right - open menu (only if on mobile)
-            if (window.innerWidth <= 1024 && !sidebar.classList.contains('open')) {
+            if (
+              window.innerWidth <= 1024 &&
+              !sidebar.classList.contains("open")
+            ) {
               toggleMobileMenu();
             }
           }

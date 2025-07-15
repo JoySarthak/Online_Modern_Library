@@ -768,6 +768,112 @@ app.post("/api/auth/logout", (req, res) => {
     res.status(500).json({ success: false, message: 'Error during logout' });
   }
 });
+// Change Username Endpoint
+app.post("/api/user/change-username", async (req, res) => {
+  try {
+    const token = req.headers.authorization?.split(" ")[1];
+    if (!token) return res.status(401).json({ error: "Unauthorized" });
+
+    const decoded = jwt.verify(token, SECRET_KEY);
+    const { newUsername, password } = req.body;
+
+    // Validate input
+    if (!newUsername || !password) {
+      return res.status(400).json({ error: "All fields are required" });
+    }
+
+    if (newUsername.length < 3) {
+      return res.status(400).json({ error: "Username must be at least 3 characters" });
+    }
+
+    // Find user
+    const user = await User.findOne({ username: decoded.username });
+    if (!user) return res.status(404).json({ error: "User not found" });
+
+    // Verify password
+    const passwordMatch = await bcrypt.compare(password, user.password);
+    if (!passwordMatch) {
+      return res.status(401).json({ error: "Incorrect password" });
+    }
+
+    // Check if new username is already taken
+    const usernameExists = await User.findOne({ username: newUsername });
+    if (usernameExists && usernameExists._id.toString() !== user._id.toString()) {
+      return res.status(400).json({ error: "Username already taken" });
+    }
+
+    // Update username
+    user.username = newUsername;
+    await user.save();
+
+    // Generate new token with updated username
+    const newToken = jwt.sign(
+      { username: newUsername, role: decoded.role },
+      SECRET_KEY,
+      { expiresIn: "1h" }
+    );
+
+    res.json({
+      success: true,
+      message: "Username updated successfully",
+      token: newToken
+    });
+  } catch (error) {
+    console.error("Error changing username:", error);
+    res.status(500).json({ error: "Failed to update username" });
+  }
+});
+
+// Change Password Endpoint
+app.post("/api/user/change-password", async (req, res) => {
+  try {
+    const token = req.headers.authorization?.split(" ")[1];
+    if (!token) return res.status(401).json({ error: "Unauthorized" });
+
+    const decoded = jwt.verify(token, SECRET_KEY);
+    const { currentPassword, newPassword } = req.body;
+
+    // Validate input
+    if (!currentPassword || !newPassword) {
+      return res.status(400).json({ error: "All fields are required" });
+    }
+
+    if (newPassword.length < 4) {
+      return res.status(400).json({ error: "Password must be at least 4 characters" });
+    }
+
+    // Find user
+    const user = await User.findOne({ username: decoded.username });
+    if (!user) return res.status(404).json({ error: "User not found" });
+
+    // Verify current password
+    const passwordMatch = await bcrypt.compare(currentPassword, user.password);
+    if (!passwordMatch) {
+      return res.status(401).json({ error: "Current password is incorrect" });
+    }
+
+    // Hash new password
+    const hashedPassword = await bcrypt.hash(newPassword, 10);
+    user.password = hashedPassword;
+    await user.save();
+
+    // Generate new token (optional - forces re-login everywhere)
+    const newToken = jwt.sign(
+      { username: user.username, role: decoded.role },
+      SECRET_KEY,
+      { expiresIn: "1h" }
+    );
+
+    res.json({
+      success: true,
+      message: "Password updated successfully",
+      token: newToken
+    });
+  } catch (error) {
+    console.error("Error changing password:", error);
+    res.status(500).json({ error: "Failed to update password" });
+  }
+});
 
 
 // Start the server
