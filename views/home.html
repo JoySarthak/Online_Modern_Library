@@ -1,633 +1,17 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Library Management System</title>
     <link href='https://unpkg.com/boxicons@2.1.4/css/boxicons.min.css' rel='stylesheet'>
-    <style>
-        * {
-            margin: 0;
-            padding: 0;
-            box-sizing: border-box;
-        }
-
-        body {
-            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-            background: linear-gradient(135deg, #f8f6ff 0%, #e6e6fa 100%);
-            min-height: 100vh;
-        }
-
-        /* Top Navbar */
-        .top-navbar {
-            background: linear-gradient(135deg, #6b46c1 0%, #8b5cf6 100%);
-            padding: 1rem 2rem;
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            box-shadow: 0 2px 10px rgba(107, 70, 193, 0.1);
-            position: fixed;
-            top: 0;
-            left: 0;
-            right: 0;
-            z-index: 1000;
-        }
-
-        .sidebar-toggle {
-            display: none;
-            background: rgba(255,255,255,0.1);
-            border: 2px solid rgba(255,255,255,0.3);
-            color: white;
-            padding: 0.5rem 1rem;
-            border-radius: 8px;
-            cursor: pointer;
-            font-size: 1.5rem;
-            margin-right: 1rem;
-            order: -1;
-        }
-
-        .sidebar-toggle:active {
-            background: rgba(255,255,255,0.2);
-        }
-
-
-
-        .project-name {
-            color: white;
-            font-size: 1.5rem;
-            font-weight: 600;
-            letter-spacing: 0.5px;
-        }
-
-        .nav-buttons {
-            display: flex;
-            gap: 1rem;
-        }
-
-        .nav-btn {
-            background: rgba(255, 255, 255, 0.1);
-            border: 2px solid rgba(255, 255, 255, 0.3);
-            color: white;
-            padding: 0.5rem 1.5rem;
-            border-radius: 25px;
-            cursor: pointer;
-            transition: all 0.3s ease;
-            font-weight: 500;
-            backdrop-filter: blur(10px);
-        }
-
-        .nav-btn:hover {
-            background: rgba(255, 255, 255, 0.2);
-            border-color: rgba(255, 255, 255, 0.5);
-            transform: translateY(-1px);
-        }
-
-        /* Side Navbar */
-        .side-navbar {
-            background: linear-gradient(180deg, #ffffff 0%, #f3f4f6 100%);
-            width: 250px;
-            height: calc(100vh - 80px);
-            position: fixed;
-            top: 80px;
-            left: 0;
-            padding: 2rem 0;
-            box-shadow: 2px 0 15px rgba(107, 70, 193, 0.1);
-            border-right: 1px solid rgba(107, 70, 193, 0.1);
-        }
-
-        .side-nav-item {
-            display: block;
-            padding: 1rem 2rem;
-            color: #4c1d95;
-            text-decoration: none;
-            font-weight: 500;
-            transition: all 0.3s ease;
-            border-left: 4px solid transparent;
-        }
-
-        .side-nav-item:hover {
-            background: linear-gradient(90deg, rgba(107, 70, 193, 0.1) 0%, rgba(139, 92, 246, 0.05) 100%);
-            border-left-color: #8b5cf6;
-            transform: translateX(5px);
-        }
-
-        /* Main Content */
-        .main-content {
-            margin-left: 250px;
-            margin-top: 80px;
-            padding: 2rem;
-            min-height: calc(100vh - 80px);
-        }
-
-        /* Tab Navigation */
-        .tab-nav {
-            display: flex;
-            gap: 1rem;
-            margin-bottom: 2rem;
-            border-bottom: 2px solid rgba(107, 70, 193, 0.1);
-        }
-
-        .tab-btn {
-            background: none;
-            border: none;
-            padding: 1rem 2rem;
-            color: #6b46c1;
-            font-weight: 600;
-            cursor: pointer;
-            transition: all 0.3s ease;
-            border-bottom: 3px solid transparent;
-            font-size: 1.1rem;
-        }
-
-        .tab-btn.active {
-            color: #8b5cf6;
-            border-bottom-color: #8b5cf6;
-        }
-
-        .tab-btn:hover {
-            color: #8b5cf6;
-            background: rgba(139, 92, 246, 0.05);
-        }
-
-        /* Tab Content */
-        .tab-content {
-            display: none;
-            animation: fadeIn 0.5s ease-in-out;
-        }
-
-        .tab-content.active {
-            display: block;
-        }
-
-        @keyframes fadeIn {
-            from { opacity: 0; transform: translateY(10px); }
-            to { opacity: 1; transform: translateY(0); }
-        }
-
-        /* Home Tab Content */
-        .home-content {
-            background: white;
-            padding: 3rem;
-            border-radius: 15px;
-            box-shadow: 0 5px 25px rgba(107, 70, 193, 0.1);
-            border: 1px solid rgba(139, 92, 246, 0.1);
-        }
-
-        .home-content h1 {
-            color: #4c1d95;
-            font-size: 2.5rem;
-            margin-bottom: 1rem;
-            text-align: center;
-        }
-
-        .home-content p {
-            color: #6b46c1;
-            font-size: 1.1rem;
-            line-height: 1.6;
-            margin-bottom: 2rem;
-            text-align: center;
-        }
-
-        .features-grid {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
-            gap: 2rem;
-            margin-top: 3rem;
-        }
-
-        .feature-card {
-            background: linear-gradient(135deg, #f8f6ff 0%, #e6e6fa 100%);
-            padding: 2rem;
-            border-radius: 12px;
-            border: 1px solid rgba(139, 92, 246, 0.2);
-            transition: transform 0.3s ease;
-        }
-
-        .feature-card:hover {
-            transform: translateY(-5px);
-            box-shadow: 0 10px 30px rgba(107, 70, 193, 0.2);
-        }
-
-        .feature-card h3 {
-            color: #4c1d95;
-            font-size: 1.3rem;
-            margin-bottom: 1rem;
-        }
-
-        .feature-card p {
-            color: #6b46c1;
-            text-align: left;
-            margin-bottom: 0;
-        }
-
-        /* Catalogue Tab Content */
-        .catalogue-content {
-            background: white;
-            padding: 2rem;
-            border-radius: 15px;
-            box-shadow: 0 5px 25px rgba(107, 70, 193, 0.1);
-            border: 1px solid rgba(139, 92, 246, 0.1);
-        }
-
-        .catalogue-header {
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            margin-bottom: 2rem;
-        }
-
-        .catalogue-header h2 {
-            color: #4c1d95;
-            font-size: 2rem;
-        }
-
-        .search-bar {
-            display: flex;
-            gap: 1rem;
-        }
-
-        .search-input {
-            padding: 0.75rem 1rem;
-            border: 2px solid rgba(139, 92, 246, 0.3);
-            border-radius: 25px;
-            font-size: 1rem;
-            width: 300px;
-            background: rgba(248, 246, 255, 0.5);
-        }
-
-        .search-input:focus {
-            outline: none;
-            border-color: #8b5cf6;
-            background: white;
-        }
-
-        .filter-btn {
-            background: linear-gradient(135deg, #6b46c1 0%, #8b5cf6 100%);
-            color: white;
-            border: none;
-            padding: 0.75rem 1.5rem;
-            border-radius: 25px;
-            cursor: pointer;
-            font-weight: 500;
-            transition: transform 0.3s ease;
-        }
-
-        .filter-btn:hover {
-            transform: translateY(-2px);
-        }
-
-        .books-grid {
-            display: grid;
-            grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
-            gap: 2rem;
-        }
-
-        .book-card {
-            background: linear-gradient(135deg, #ffffff 0%, #f8f6ff 100%);
-            border-radius: 15px;
-            overflow: hidden;
-            box-shadow: 0 5px 20px rgba(107, 70, 193, 0.1);
-            transition: all 0.3s ease;
-            border: 1px solid rgba(139, 92, 246, 0.1);
-        }
-
-        .book-card:hover {
-            transform: translateY(-8px);
-            box-shadow: 0 15px 40px rgba(107, 70, 193, 0.2);
-        }
-
-        .book-cover {
-            height: 200px;
-            background: linear-gradient(45deg, #6b46c1, #8b5cf6, #a78bfa);
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            color: white;
-            font-size: 1.2rem;
-            font-weight: 600;
-            text-align: center;
-            position: relative;
-            overflow: hidden;
-            background-size: cover;
-            background-position: center;
-        }
-
-        .book-cover::before {
-            content: '';
-            position: absolute;
-            top: -50%;
-            left: -50%;
-            width: 200%;
-            height: 200%;
-            background: linear-gradient(45deg, transparent, rgba(255,255,255,0.1), transparent);
-            animation: shimmer 3s infinite;
-        }
-
-        @keyframes shimmer {
-            0% { transform: translateX(-100%) translateY(-100%) rotate(45deg); }
-            100% { transform: translateX(100%) translateY(100%) rotate(45deg); }
-        }
-
-        .book-info {
-            padding: 1.5rem;
-        }
-
-        .book-title {
-            color: #4c1d95;
-            font-size: 1.2rem;
-            font-weight: 600;
-            margin-bottom: 0.5rem;
-        }
-
-        .book-author {
-            color: #6b46c1;
-            font-size: 1rem;
-            margin-bottom: 0.5rem;
-        }
-
-        .book-genre {
-            color: #8b5cf6;
-            font-size: 0.9rem;
-            opacity: 0.8;
-        }
-
-        .book-availability {
-            color: #059669;
-            font-size: 0.9rem;
-            font-weight: 500;
-            margin-bottom: 0.5rem;
-        }
-
-        .book-actions {
-            display: flex;
-            gap: 1rem;
-            margin-top: 1rem;
-        }
-
-        .action-btn {
-            flex: 1;
-            padding: 0.5rem;
-            border: 2px solid #8b5cf6;
-            background: transparent;
-            color: #8b5cf6;
-            border-radius: 20px;
-            cursor: pointer;
-            font-weight: 500;
-            transition: all 0.3s ease;
-        }
-
-        .action-btn:hover {
-            background: #8b5cf6;
-            color: white;
-        }
-
-        .action-btn.primary {
-            background: #8b5cf6;
-            color: white;
-        }
-
-        .action-btn.primary:hover {
-            background: #6b46c1;
-            border-color: #6b46c1;
-        }
-
-        .action-btn:disabled {
-            background: #d1d5db;
-            border-color: #d1d5db;
-            color: #6b7280;
-            cursor: not-allowed;
-        }
-
-        .loading {
-            text-align: center;
-            padding: 2rem;
-            color: #6b46c1;
-            font-size: 1.1rem;
-        }
-
-        .error-message {
-            background: #fee2e2;
-            color: #dc2626;
-            padding: 1rem;
-            border-radius: 8px;
-            margin-bottom: 1rem;
-            border: 1px solid #fecaca;
-        }
-
-        .success-message {
-            background: #dcfce7;
-            color: #16a34a;
-            padding: 1rem;
-            border-radius: 8px;
-            margin-bottom: 1rem;
-            border: 1px solid #bbf7d0;
-        }
-
-        .pagination {
-            display: flex;
-            justify-content: center;
-            gap: 1rem;
-            margin-top: 2rem;
-        }
-
-        .pagination-btn {
-            padding: 0.5rem 1rem;
-            border: 2px solid #8b5cf6;
-            background: transparent;
-            color: #8b5cf6;
-            border-radius: 8px;
-            cursor: pointer;
-            transition: all 0.3s ease;
-        }
-
-        .pagination-btn:hover {
-            background: #8b5cf6;
-            color: white;
-        }
-
-        .pagination-btn.active {
-            background: #8b5cf6;
-            color: white;
-        }
-
-        .pagination-btn:disabled {
-            background: #d1d5db;
-            border-color: #d1d5db;
-            color: #6b7280;
-            cursor: not-allowed;
-        }
-
-        @media (max-width: 900px) {
-            .main-content {
-                margin-left: 0;
-                padding: 1rem;
-            }
-            .side-navbar {
-                display: none;
-            }
-            .side-navbar.mobile {
-                display: block !important;
-            }
-            .home-content, .catalogue-content {
-                margin: 0;
-                padding: 1.5rem;
-            }
-            .sidebar-toggle {
-                display: block;
-            }
-            .nav-buttons {
-                display: none;
-            }
-            .catalogue-header {
-                flex-direction: column;
-                align-items: stretch;
-                gap: 1rem;
-            }
-            .search-bar {
-                flex-direction: column;
-                gap: 0.5rem;
-            }
-            .search-input {
-                width: 100%;
-            }
-            .books-grid {
-                grid-template-columns: 1fr;
-                gap: 1.5rem;
-            }
-            .features-grid {
-                grid-template-columns: 1fr;
-                gap: 1.5rem;
-            }
-            .tab-nav {
-                flex-direction: column;
-                gap: 0.5rem;
-            }
-            .tab-btn {
-                text-align: center;
-                padding: 0.8rem 1rem;
-            }
-        }
-
-        @media (max-width: 600px) {
-            .top-navbar {
-                padding: 1rem;
-            }
-            .main-content {
-                padding: 0.5rem;
-            }
-            .home-content, .catalogue-content {
-                padding: 1rem;
-                border-radius: 10px;
-            }
-            .home-content h1 {
-                font-size: 2rem;
-            }
-            .home-content p {
-                font-size: 1rem;
-            }
-            .feature-card {
-                padding: 1.5rem;
-            }
-            .book-info {
-                padding: 1rem;
-            }
-            .book-actions {
-                flex-direction: column;
-                gap: 0.5rem;
-            }
-        }
-
-        /* Sidebar mobile overlay */
-        .sidebar-overlay {
-            position: fixed;
-            inset: 0;
-            background: rgba(0, 0, 0, 0.5);
-            z-index: 40;
-            display: none;
-        }
-        .sidebar-overlay.active {
-            display: block;
-        }
-        /* Mobile sidebar slide-in */
-        .side-navbar.mobile {
-            display: none;
-            position: fixed;
-            left: 0;
-            top: 80px;
-            width: 256px;
-            height: calc(100vh - 80px);
-            background: white;
-            box-shadow: 4px 0 6px rgba(0, 0, 0, 0.05);
-            transform: translateX(-100%);
-            transition: transform 0.3s ease;
-            z-index: 1000;
-            padding: 0;
-            border-right: 1px solid #e5e7eb;
-        }
-        .side-navbar.mobile.open {
-            transform: translateX(0);
-        }
-        .side-navbar.mobile .side-nav-item {
-            display: flex;
-            align-items: center;
-            padding: 14px 16px;
-            color: #374151;
-            text-decoration: none;
-            border-radius: 10px;
-            margin-bottom: 6px;
-            margin-left: 16px;
-            margin-right: 16px;
-            transition: all 0.3s ease;
-            border-left: none;
-            transform: none;
-            font-weight: 600;
-            font-size: 15px;
-            background: #f8fafc;
-            border: 1px solid #e2e8f0;
-            position: relative;
-            overflow: hidden;
-            gap: 12px;
-        }
-        .side-navbar.mobile .side-nav-item i {
-            font-size: 18px;
-            color: #6b7280;
-            transition: all 0.3s ease;
-        }
-        .side-navbar.mobile .side-nav-item:hover i {
-            color: #4f46e5;
-        }
-        .side-navbar.mobile .side-nav-item::before {
-            content: '';
-            position: absolute;
-            left: 0;
-            top: 0;
-            height: 100%;
-            width: 4px;
-            background: linear-gradient(135deg, #6b46c1, #8b5cf6);
-            transform: scaleY(0);
-            transition: transform 0.3s ease;
-        }
-        .side-navbar.mobile .side-nav-item:hover {
-            background: linear-gradient(135deg, #eef2ff, #f1f5f9);
-            color: #4f46e5;
-            transform: translateX(4px);
-            border-color: #c7d2fe;
-            box-shadow: 0 4px 12px rgba(107, 70, 193, 0.15);
-        }
-        .side-navbar.mobile .side-nav-item:hover::before {
-            transform: scaleY(1);
-        }
-        .side-navbar.mobile .side-nav-item:first-child {
-            margin-top: 16px;
-        }
-        .side-navbar.mobile .side-nav-item:active {
-            transform: translateX(4px) scale(0.98);
-        }
-    </style>
+    <link rel="stylesheet" href="/home.css">
 </head>
+
 <body>
     <!-- Top Navbar -->
-        <nav class="top-navbar">
+    <nav class="top-navbar">
         <button class="sidebar-toggle" id="sidebarToggle" aria-label="Open sidebar">☰</button>
         <div class="project-name">BorrowLabs</div>
         <div class="nav-buttons">
@@ -645,13 +29,15 @@
         <a href="#" class="side-nav-item">AI Recommendations</a>
     </nav>
     <nav class="side-navbar mobile" id="mobileSidebar">
-        <div style="padding: 16px; border-bottom: 1px solid #e5e7eb; font-size: 18px; font-weight: 600; color: #111827; background: linear-gradient(135deg, #f8fafc, #eef2ff);">
+        <div
+            style="padding: 16px; border-bottom: 1px solid #e5e7eb; font-size: 18px; font-weight: 600; color: #111827; background: linear-gradient(135deg, #f8fafc, #eef2ff);">
             <i class='bx bx-menu' style="margin-right: 8px;"></i>Menu
         </div>
         <a href="/" class="side-nav-item"><i class='bx bx-home-alt'></i>Home</a>
         <a href="/login" class="side-nav-item"><i class='bx bx-log-in'></i>Login</a>
         <a href="/register" class="side-nav-item"><i class='bx bx-user-plus'></i>SignUp</a>
-        <a href="https://portfolio-joysarthaks-projects.vercel.app/" class="side-nav-item"><i class='bx bx-info-circle'></i>About Us</a>
+        <a href="https://portfolio-joysarthaks-projects.vercel.app/" class="side-nav-item"><i
+                class='bx bx-info-circle'></i>About Us</a>
         <a href="#" class="side-nav-item"><i class='bx bx-coin'></i>Coins</a>
         <a href="#" class="side-nav-item"><i class='bx bx-brain'></i>AI Recommendations</a>
     </nav>
@@ -668,24 +54,36 @@
         <div id="home" class="tab-content active">
             <div class="home-content">
                 <h1>Welcome to BorrowLabs</h1>
-                <p>Your comprehensive digital library solution, designed to revolutionize how you discover, organize, and manage your literary collection.</p>
-                
+                <p>Your comprehensive digital library solution, designed to revolutionize how you discover, organize,
+                    and manage your literary collection.</p>
+
                 <div class="features-grid">
                     <div class="feature-card">
                         <h3>Smart Catalog Management</h3>
-                        <p>Effortlessly organize your entire book collection with our intelligent cataloging system. Advanced search and filtering capabilities make finding any book instantaneous.</p>
+                        <p>Effortlessly organize your entire book collection with our intelligent cataloging system.
+                            Advanced search and filtering capabilities make finding any book instantaneous.</p>
                     </div>
                     <div class="feature-card">
                         <h3>AI-Powered Recommendations</h3>
-                        <p>Discover your next favorite read with our sophisticated AI recommendation engine that learns from your reading preferences and suggests personalized book recommendations.</p>
+                        <p>Discover your next favorite read with our sophisticated AI recommendation engine that learns
+                            from your reading preferences and suggests personalized book recommendations.(coming soon)</p>
                     </div>
                     <div class="feature-card">
                         <h3>User Management System</h3>
-                        <p>Streamlined user registration, authentication, and profile management with comprehensive dashboard analytics for both librarians and readers.</p>
+                        <p>Streamlined user registration, authentication, and profile management with comprehensive
+                            dashboard.</p>
                     </div>
                     <div class="feature-card">
                         <h3>Digital Coin System</h3>
-                        <p>Innovative reward system that incentivizes reading and library engagement through our digital coin marketplace and achievement system.</p>
+                        <p>Forget the hassle of dues and fines. Request for a book as time based subscription, renew when expires, pay with coin based currency(coming soon)</p>
+                    </div>
+                    <div class="feature-card">
+                        <h3>Admin Control</h3>
+                        <p>Organisation Admin based control setup, which helps in adding books, managing users and approving requests</p>
+                    </div>
+                    <div class="feature-card">
+                        <h3>Education Oriented</h3>
+                        <p>Simple and interactive UI to reduce distractions and promote literacy</p>
                     </div>
                 </div>
             </div>
@@ -695,9 +93,10 @@
         <div id="catalogue" class="tab-content">
             <div class="catalogue-content">
                 <div class="catalogue-header">
-                    <h2>Book Catalogue</h2>
+                    <h2>Browse Books</h2>
                     <div class="search-bar">
-                        <input type="text" class="search-input" placeholder="Search books, authors, or genres..." id="searchInput">
+                        <input type="text" class="search-input" placeholder="Search books, authors, or genres..."
+                            id="searchInput">
                         <button class="filter-btn" onclick="searchBooks()">Search</button>
                     </div>
                 </div>
@@ -712,8 +111,23 @@
             </div>
         </div>
     </main>
+    <!-- FAQ Floating Button -->
+    <button id="faqBtn" class="faq-btn" aria-label="FAQ">?</button>
+    <!-- FAQ Modal -->
+    <div id="faqModal" class="faq-modal">
+        <div class="faq-modal-content">
+            <span class="faq-close" id="faqClose">&times;</span>
+            <h2>Frequently Asked Questions</h2>
+            <ul>
+                <li><strong>How do I borrow a book?</strong> <br>Login or sign up, browse the catalogue, present on your dashboard, select number of days as required, upon admin approval you get access to the book</li>
+                <li><strong>What is the coin system?</strong> <br>Books can be borrowed using digital coins (feature coming soon).</li>
+                <li><strong>How do I renew a book?</strong> <br>Go to your dashboard and click 'Renew' on your borrowed book after it expires.</li>
+                <li><strong>Need more help?</strong> <br>Contact support via email or whatsapp</li>
+            </ul>
+        </div>
+    </div>
     <script>
-      const API_BASE_URL = window.location.origin;
+        const API_BASE_URL = window.location.origin;
         let currentPage = 1;
         let currentSearch = '';
 
@@ -741,7 +155,7 @@
         async function loadBooks() {
             const booksGrid = document.getElementById('booksGrid');
             const messageContainer = document.getElementById('messageContainer');
-            
+
             messageContainer.innerHTML = '';
             booksGrid.innerHTML = '<div class="loading">Loading books...</div>';
 
@@ -753,9 +167,9 @@
 
                 console.log('Fetching books from:', `${API_BASE_URL}/api/books?${params}`);
                 const response = await fetch(`${API_BASE_URL}/api/books?${params}`);
-                
+
                 console.log('Response status:', response.status);
-                
+
                 if (!response.ok) {
                     throw new Error(`HTTP error! status: ${response.status}`);
                 }
@@ -780,7 +194,7 @@
         // Function to render books - kept your original styling and buttons
         function renderBooks(books) {
             const booksGrid = document.getElementById('booksGrid');
-            
+
             booksGrid.innerHTML = books.map(book => `
                 <div class="book-card">
                     <div class="book-cover" style="${book.imageCoverLink ? `background-image: url('${book.imageCoverLink}')` : 'none'}">
@@ -823,7 +237,7 @@
             loadBooks();
         }
 
-        
+
 
         function showBookDetails(bookId) {
             alert('Book details feature coming soon!');
@@ -835,10 +249,10 @@
             loadBooks();
         }
 
-        document.addEventListener('DOMContentLoaded', function() {
+        document.addEventListener('DOMContentLoaded', function () {
             const buttons = document.querySelectorAll('.nav-btn, .action-btn, .filter-btn');
             buttons.forEach(button => {
-                button.addEventListener('click', function() {
+                button.addEventListener('click', function () {
                     this.style.transform = 'scale(0.95)';
                     setTimeout(() => {
                         this.style.transform = '';
@@ -847,7 +261,7 @@
             });
 
             const searchInput = document.getElementById('searchInput');
-            searchInput.addEventListener('keypress', function(e) {
+            searchInput.addEventListener('keypress', function (e) {
                 if (e.key === 'Enter') {
                     searchBooks();
                 }
@@ -856,31 +270,66 @@
     </script>
     <script>
 
-    
-    // Sidebar mobile toggle logic
-    const sidebarToggle = document.getElementById('sidebarToggle');
-    const sidebarOverlay = document.getElementById('sidebarOverlay');
-    const mobileSidebar = document.getElementById('mobileSidebar');
-    
-    function openSidebar() {
-        console.log('Opening sidebar');
-        mobileSidebar.classList.add('open');
-        sidebarOverlay.classList.add('active');
-    }
-    
-    function closeSidebar() {
-        console.log('Closing sidebar');
-        mobileSidebar.classList.remove('open');
-        sidebarOverlay.classList.remove('active');
-    }
-    
-    sidebarToggle.addEventListener('click', openSidebar);
-    sidebarOverlay.addEventListener('click', closeSidebar);
-    
-    // Optional: close sidebar when a link is clicked
-    mobileSidebar.querySelectorAll('a').forEach(link => {
-        link.addEventListener('click', closeSidebar);
+
+        // Sidebar mobile toggle logic
+        const sidebarToggle = document.getElementById('sidebarToggle');
+        const sidebarOverlay = document.getElementById('sidebarOverlay');
+        const mobileSidebar = document.getElementById('mobileSidebar');
+
+        function openSidebar() {
+            console.log('Opening sidebar');
+            mobileSidebar.classList.add('open');
+            sidebarOverlay.classList.add('active');
+        }
+
+        function closeSidebar() {
+            console.log('Closing sidebar');
+            mobileSidebar.classList.remove('open');
+            sidebarOverlay.classList.remove('active');
+        }
+
+        sidebarToggle.addEventListener('click', openSidebar);
+        sidebarOverlay.addEventListener('click', closeSidebar);
+
+        // Optional: close sidebar when a link is clicked
+        mobileSidebar.querySelectorAll('a').forEach(link => {
+            link.addEventListener('click', closeSidebar);
+        });
+    </script>
+    <script>
+    // FAQ Modal Logic
+    const faqBtn = document.getElementById('faqBtn');
+    const faqModal = document.getElementById('faqModal');
+    const faqClose = document.getElementById('faqClose');
+    faqBtn.addEventListener('click', function() {
+        faqModal.style.display = 'block';
+    });
+    faqClose.addEventListener('click', function() {
+        faqModal.style.display = 'none';
+    });
+    window.addEventListener('click', function(event) {
+        if (event.target === faqModal) {
+            faqModal.style.display = 'none';
+        }
     });
     </script>
+    <footer class="footer">
+        <div class="footer-content">
+            <div class="footer-info">
+                <span>Contact Helpdesk: </span>
+                <a href="mailto:helpdesk@borrowlabs.com">helpdesk@borrowlabs.com</a> |
+                <a href="tel:+1234567890">+91 XXXXX-XXXXX</a>
+            </div>
+            <div class="footer-social">
+                <a href="https://github.com/your-github" target="_blank" class="footer-icon" aria-label="GitHub">
+                    <i class='bx bxl-github'></i>
+                </a>
+                <a href="https://linkedin.com/in/your-linkedin" target="_blank" class="footer-icon" aria-label="LinkedIn">
+                    <i class='bx bxl-linkedin-square'></i>
+                </a>
+            </div>
+        </div>
+    </footer>
 </body>
+
 </html>
